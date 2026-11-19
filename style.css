@@ -1,0 +1,279 @@
+/* ========== O'zgaruvchilar ========== */
+:root {
+  --bg: #0b0820;
+  --glass: rgba(255, 255, 255, .07);
+  --glass-strong: rgba(255, 255, 255, .12);
+  --border: rgba(255, 255, 255, .14);
+  --ink: #f4f2ff;
+  --muted: #a79fd0;
+  --pink: #ff4fd8;
+  --violet: #7c5cff;
+  --cyan: #22d3ee;
+  --done: #3ef0a8;
+  --danger: #ff5c7a;
+  --grad: linear-gradient(120deg, var(--pink), var(--violet) 55%, var(--cyan));
+  --font: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+}
+
+/* ========== Asos ========== */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 56px 16px;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font);
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Harakatlanuvchi rangli yorug'lik dog'lari */
+body::before, body::after {
+  content: "";
+  position: fixed;
+  width: 520px;
+  height: 520px;
+  border-radius: 50%;
+  filter: blur(110px);
+  opacity: .55;
+  z-index: 0;
+  pointer-events: none;
+}
+body::before { background: var(--violet); top: -140px; left: -120px; animation: drift 14s ease-in-out infinite alternate; }
+body::after  { background: var(--pink);   bottom: -160px; right: -120px; animation: drift 18s ease-in-out infinite alternate-reverse; }
+
+@keyframes drift {
+  to { transform: translate(90px, 60px) scale(1.15); }
+}
+
+button, input { font: inherit; color: inherit; }
+button { cursor: pointer; }
+
+:focus-visible { outline: 3px solid var(--cyan); outline-offset: 2px; }
+
+/* ========== Ilova kartasi (shisha) ========== */
+.app {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 580px;
+  height: fit-content;
+  padding: 38px 32px 24px;
+  background: var(--glass);
+  border: 1px solid var(--border);
+  border-radius: 32px;
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  box-shadow: 0 40px 80px -30px rgba(0, 0, 0, .7), inset 0 1px 0 rgba(255, 255, 255, .15);
+}
+
+.app__title {
+  margin: 0;
+  font-size: clamp(2.2rem, 7vw, 3.2rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.app__date { margin: 10px 0 0; color: var(--muted); text-transform: capitalize; }
+
+/* ========== Jarayon ========== */
+.progress { margin: 28px 0 24px; }
+
+.progress__text { margin-bottom: 12px; color: var(--muted); }
+.progress__text strong { color: var(--ink); font-size: 1.3rem; }
+
+.progress__bar {
+  height: 12px;
+  background: rgba(255, 255, 255, .1);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.progress__fill {
+  height: 100%;
+  width: 0;
+  background: var(--grad);
+  border-radius: 99px;
+  box-shadow: 0 0 18px rgba(124, 92, 255, .9);
+  transition: width .5s cubic-bezier(.3, 1.2, .5, 1);
+}
+
+/* ========== Qo'shish formasi ========== */
+.add { display: flex; gap: 10px; }
+
+.add__input {
+  flex: 1;
+  min-width: 0;
+  padding: 16px 20px;
+  background: rgba(0, 0, 0, .25);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  transition: border-color .2s, box-shadow .2s;
+}
+
+.add__input::placeholder { color: #8077b3; }
+
+.add__input:focus {
+  outline: none;
+  border-color: var(--violet);
+  box-shadow: 0 0 0 4px rgba(124, 92, 255, .25);
+}
+
+.add__btn {
+  padding: 0 24px;
+  border: 0;
+  border-radius: 16px;
+  background: var(--grad);
+  color: #fff;
+  font-weight: 700;
+  box-shadow: 0 10px 26px -8px rgba(255, 79, 216, .7);
+  transition: transform .15s, box-shadow .2s, filter .2s;
+}
+
+.add__btn:hover { filter: brightness(1.12); box-shadow: 0 14px 30px -8px rgba(124, 92, 255, .9); }
+.add__btn:active { transform: scale(.95); }
+
+/* ========== Filtrlar ========== */
+.filters {
+  display: inline-flex;
+  gap: 4px;
+  margin: 24px 0 10px;
+  padding: 5px;
+  background: rgba(0, 0, 0, .25);
+  border-radius: 99px;
+}
+
+.filters__btn {
+  padding: 8px 16px;
+  border: 0;
+  border-radius: 99px;
+  background: transparent;
+  color: var(--muted);
+  font-weight: 600;
+  transition: background .2s, color .2s;
+}
+
+.filters__btn:hover { color: var(--ink); }
+.filters__btn.is-active { background: var(--glass-strong); color: var(--ink); box-shadow: inset 0 0 0 1px var(--border); }
+
+/* ========== Vazifalar ro'yxati ========== */
+.tasks { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+
+.task {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 14px;
+  background: var(--glass);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  animation: pop .35s cubic-bezier(.3, 1.4, .5, 1);
+  transition: transform .2s, background .2s, border-color .2s;
+}
+
+.task:hover { transform: translateX(4px); background: var(--glass-strong); border-color: rgba(124, 92, 255, .6); }
+
+@keyframes pop {
+  from { opacity: 0; transform: translateY(-10px) scale(.96); }
+  to   { opacity: 1; transform: none; }
+}
+
+.task__check {
+  flex: none;
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  background: transparent;
+  border: 2px solid #5d548f;
+  border-radius: 10px;
+  transition: background .25s, border-color .25s, box-shadow .25s;
+}
+
+.task__check::after {
+  content: "";
+  width: 6px;
+  height: 12px;
+  margin-top: -2px;
+  border: solid #07281c;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg) scale(0);
+  transition: transform .25s cubic-bezier(.3, 1.6, .5, 1);
+}
+
+.task__check:hover { border-color: var(--done); }
+
+.task.is-done .task__check {
+  background: var(--done);
+  border-color: var(--done);
+  box-shadow: 0 0 16px rgba(62, 240, 168, .6);
+}
+.task.is-done .task__check::after { transform: rotate(45deg) scale(1); }
+
+.task__text {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-size: 1.08rem;
+  transition: color .2s;
+}
+
+.task.is-done .task__text { color: #7d75a8; text-decoration: line-through; text-decoration-color: var(--pink); }
+
+.task__delete {
+  flex: none;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 1.4rem;
+  line-height: 1;
+  transition: background .2s, color .2s;
+}
+
+.task__delete:hover { background: rgba(255, 92, 122, .18); color: var(--danger); }
+
+/* ========== Bo'sh holat va footer ========== */
+.empty {
+  margin: 20px 0 8px;
+  padding: 28px;
+  border: 2px dashed var(--border);
+  border-radius: 20px;
+  color: var(--muted);
+  text-align: center;
+}
+
+.app__footer { margin-top: 20px; text-align: right; }
+
+.clear {
+  border: 0;
+  background: none;
+  color: var(--muted);
+  font-size: .9rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color .2s;
+}
+
+.clear:hover { color: var(--danger); }
+
+/* ========== Mobil ========== */
+@media (max-width: 480px) {
+  body { padding: 20px 12px; }
+  .app { padding: 28px 18px 18px; border-radius: 26px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}

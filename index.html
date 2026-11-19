@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vazifalar — Mini Task Manager</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app">
+
+    <header class="app__header">
+      <h1 class="app__title">Bugun nima qilamiz?</h1>
+      <p class="app__date" id="date"></p>
+    </header>
+
+    <section class="progress" aria-label="Jarayon">
+      <div class="progress__text">
+        <strong id="doneCount">0</strong> / <span id="totalCount">0</span> vazifa bajarildi
+      </div>
+      <div class="progress__bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progressBar">
+        <div class="progress__fill" id="progressFill"></div>
+      </div>
+    </section>
+
+    <form class="add" id="taskForm" autocomplete="off">
+      <input class="add__input" id="taskInput" type="text" maxlength="80"
+             placeholder="Yangi vazifa yozing…" aria-label="Yangi vazifa" required>
+      <button class="add__btn" type="submit">Qo‘shish</button>
+    </form>
+
+    <nav class="filters" aria-label="Filtr">
+      <button class="filters__btn is-active" data-filter="all">Hammasi</button>
+      <button class="filters__btn" data-filter="active">Faol</button>
+      <button class="filters__btn" data-filter="done">Bajarilgan</button>
+    </nav>
+
+    <ul class="tasks" id="taskList"></ul>
+
+    <p class="empty" id="emptyState" hidden>
+      Hozircha vazifa yo‘q. Yuqoridagi maydonga birinchi vazifangizni yozing.
+    </p>
+
+    <footer class="app__footer">
+      <button class="clear" id="clearDone" type="button">Bajarilganlarni tozalash</button>
+    </footer>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
